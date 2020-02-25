@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.liveperson.api.LivePersonCallback;
 import com.liveperson.infra.ConversationViewParams;
 import com.liveperson.infra.InitLivePersonProperties;
+import com.liveperson.infra.MonitoringInitParams;
 import com.liveperson.infra.auth.LPAuthenticationParams;
 import com.liveperson.infra.auth.LPAuthenticationType;
 import com.liveperson.infra.callbacks.InitLivePersonCallBack;
@@ -29,19 +30,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startCodeFlow(View v) {
-        String brandID = "62219232";
-        final String authCode = "k16336";
-        LivePerson.initialize(this, new InitLivePersonProperties(brandID, APP_ID, new InitLivePersonCallBack() {
+        String brandID = "16808290";
+        String appInstallID = "1dfc9f19-9b91-4108-84c2-126a8ad79501";
+        final MonitoringInitParams monitoringInitParams = new MonitoringInitParams(appInstallID);
+        LivePerson.initialize(this, new InitLivePersonProperties(brandID, APP_ID, monitoringInitParams, new InitLivePersonCallBack() {
             @Override
             public void onInitSucceed() {
-                LPAuthenticationParams lpAuthenticationParams = new LPAuthenticationParams(LPAuthenticationType.AUTH);
-                lpAuthenticationParams.setAuthKey(authCode);
+                LPAuthenticationParams lpAuthenticationParams = new LPAuthenticationParams(LPAuthenticationType.UN_AUTH);
                 LivePerson.showConversation(MainActivity.this, lpAuthenticationParams, new ConversationViewParams());
             }
 
             @Override
             public void onInitFailed(Exception e) {
-                Log.e("Error authenticating", Objects.requireNonNull(e.getMessage()));
             }
         }));
     }
