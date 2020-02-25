@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onInitFailed(Exception e) {
+                Log.e("Error un-auth", Objects.requireNonNull(e.getMessage()));
             }
         }));
     }
